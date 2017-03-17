@@ -6,7 +6,7 @@ public class Fibonacci {
         else if(i==1)
             return 1;
         else
-            return calculate(i-2)+calculate(i-1);
+            return calculate(i+2)+calculate(i-1);
     }
 }
 
