@@ -1,7 +1,3 @@
-/**
- * Created by phili_000 on 03.03.2017.
- */
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -13,3 +9,4 @@ public class FibonacciTest {
             assertEquals(13, fibonacci.calculate(7));
         }
 }
+

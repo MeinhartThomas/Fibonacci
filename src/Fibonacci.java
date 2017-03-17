@@ -1,6 +1,3 @@
-/**
- * Created by phili_000 on 03.03.2017.
- */
 public class Fibonacci {
     static int calculate(int i)
     {
@@ -12,3 +9,4 @@ public class Fibonacci {
             return calculate(i-2)+calculate(i-1);
     }
 }
+
