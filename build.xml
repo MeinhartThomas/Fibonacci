@@ -99,18 +99,6 @@
     <pathelement location="${basedir}/hamcrest-core-1.3.jar"/>
     <pathelement location="${basedir}/junit-4.12.jar"/>
   </path>
-  <!-- Register Custom Compiler Taskdefs -->
-  <property name="javac2.home" value="${idea.home}/lib"/>
-  <path id="javac2.classpath">
-    <pathelement location="${javac2.home}/javac2.jar"/>
-    <pathelement location="${javac2.home}/jdom.jar"/>
-    <pathelement location="${javac2.home}/asm-all.jar"/>
-    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
-  </path>
-  <target name="register.custom.compilers">
-    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
-    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
-  </target>
   
   <!-- Modules -->
   
@@ -173,15 +161,15 @@
   
   <target name="compile.module.junit_travis" depends="compile.module.junit_travis.production,compile.module.junit_travis.tests" description="Compile module JUnit Travis"/>
   
-  <target name="compile.module.junit_travis.production" depends="register.custom.compilers" description="Compile module JUnit Travis; production classes">
+  <target name="compile.module.junit_travis.production" description="Compile module JUnit Travis; production classes">
     <mkdir dir="${junit_travis.output.dir}"/>
-    <javac2 destdir="${junit_travis.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.junit_travis}/javac">
+    <javac destdir="${junit_travis.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.junit_travis}/javac">
       <compilerarg line="${compiler.args.junit_travis}"/>
       <bootclasspath refid="junit_travis.module.bootclasspath"/>
       <classpath refid="junit_travis.module.production.classpath"/>
       <src refid="junit_travis.module.sourcepath"/>
       <patternset refid="excluded.from.compilation.junit_travis"/>
-    </javac2>
+    </javac>
     
     <copy todir="${junit_travis.output.dir}">
       <fileset dir="${module.junit_travis.basedir}/src">
@@ -191,7 +179,7 @@
     </copy>
   </target>
   
-  <target name="compile.module.junit_travis.tests" depends="register.custom.compilers,compile.module.junit_travis.production" description="compile module JUnit Travis; test classes" unless="skip.tests"/>
+  <target name="compile.module.junit_travis.tests" depends="compile.module.junit_travis.production" description="compile module JUnit Travis; test classes" unless="skip.tests"/>
   
   <target name="clean.module.junit_travis" description="cleanup module">
     <delete dir="${junit_travis.output.dir}"/>
